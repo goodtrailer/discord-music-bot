@@ -3,7 +3,7 @@ play (song name) -> fetches first query from yt and plays that video/song
     if bot not in vc, find the id of user who requested and join their vc. if they're not in a vc, cancel and display error msg
     if bot alr in vc, just add to queue
 queue -> displays the queue of songs and their position in queue + duration/empty queue msg
-leave -> leaves the vc
+leave -> leaves the vc and clears the queue
 shuffle -> shuffles queue or displays error msg if queue empty
 resume -> resumes playing if paused, error msg if alr playing
 pause -> pauses if song is playing, otherwise error msg
