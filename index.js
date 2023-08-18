@@ -2,8 +2,8 @@
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-
 const dotenv = require('dotenv');
+
 dotenv.config();
 
 // Create a new client instance
