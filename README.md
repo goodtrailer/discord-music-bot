@@ -1,8 +1,16 @@
-#
-Discord Youtube Bot
+# Discord Youtube Bot
 
-A bot that joins your discord server and plays your favorite songs and videos from YouTube.
+A discord bot used to play songs and videos from YouTube and Spotify in your server.
 
-When cloning, run "npm install .", then make a .env file and set DISCORD_TOKEN to the token of your discord bot, CLIENT_ID to the application id of your bot, and the GUILD_ID (optional) to your server ID. Invite the bot, run "node deploy-commands.js" and if it runs without errors, run "node index.js" to start the bot.
+## Usage Instructions
+Clone the repository
+Run 'npm install .'
+Download ffmpeg (I recommend this one for Windows users: https://blog.gregzaal.com/how-to-install-ffmpeg-on-windows/)
+Make a .env file in the main directory with the following contents
+    DISCORD_TOKEN=your-token-here
+    CLIENT_ID=application-id-of-the-bot
+    GUILD_ID=id-of-your-server (this one is optional and not used by default, but can be easily changed in deploy-commands.js)
+Invite the bot to your server
+Run 'node deploy-commands.js' and enjoy
 
-Linting rules can be modified in .eslintrc.json and commands are stored in the commands folder.
+*Linting rules can be modified in .eslintrc.json and commands are stored in the commands folder.
