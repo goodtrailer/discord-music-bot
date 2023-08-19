@@ -6,9 +6,12 @@ module.exports = {
         .setName("pause")
         .setDescription("Pauses the queue"),
     async execute(interaction) {
-        // await interaction.deferReply();
         try {
             const queue = useQueue(interaction.guild.id);
+			// checks for null queue
+			if (!queue) {
+				return interaction.reply("The queue is empty! Please add some songs to use this command");
+			}
             if (queue.node.isPaused()) {
                 return interaction.reply("The queue is already paused!");
             } else {
