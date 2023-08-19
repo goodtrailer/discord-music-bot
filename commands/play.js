@@ -23,10 +23,10 @@ module.exports = {
 				}
 			});
 	
-			return interaction.followUp(`Added **${track.title}** to the queue!`);
+			return await interaction.followUp(`Added **${track.title}** to the queue!`);
 		} catch (e) {
 			// let's return error if something failed
-			return interaction.followUp(`Something went wrong: ${e}`);
+			return await interaction.followUp(`Something went wrong: ${e}`);
 		}
 	},
 };

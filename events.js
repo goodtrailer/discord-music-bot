@@ -1,4 +1,6 @@
-const { player } = require('./index.js');
+const { useMainPlayer } = require('discord-player');
+
+const player = useMainPlayer();
 
 // this event is emitted whenever discord-player starts to play a track
 player.events.on('playerStart', (queue, track) => {
