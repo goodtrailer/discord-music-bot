@@ -1,12 +1,13 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { player } = require('../index.js');
+const { useMainPlayer } = require('discord-player');
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('play')
 		.setDescription('Play a song in your voice channel')
-		.addStringOption(option => option.setName('query').setDescription('The name or link to the song or video').setRequired(true)),
+		.addStringOption(option => option.setName('query').setDescription('The name or link to the song').setRequired(true)),
 	async execute(interaction) {
+		const player = useMainPlayer();
 		const channel = interaction.member.voice.channel;
 		if (!channel) return interaction.reply('You are not connected to a voice channel!'); // make sure we have a voice channel
 		const query = interaction.options.getString('query', true); // we need input/query to play
@@ -22,7 +23,7 @@ module.exports = {
 				}
 			});
 	
-			return interaction.followUp(`**${track.title}** enqueued!`);
+			return interaction.followUp(`Added **${track.title}** to the queue!`);
 		} catch (e) {
 			// let's return error if something failed
 			return interaction.followUp(`Something went wrong: ${e}`);
