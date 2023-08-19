@@ -11,6 +11,6 @@ module.exports = {
 			return interaction.reply("A queue does not exist!");
 		}
 		queue.delete();
-		return interaction.reply("Goodbye, thanks for using me!");
+		return interaction.reply("Leaving the voice channel");
 	},
 };
