@@ -8,17 +8,15 @@ module.exports = {
             option
                 .setName("position")
                 .setDescription(
-                    "The position in queue of the song you want to skip to"
+                    "The position in queue of the song you want to skip to (queue starts at position 1)"
                 )
                 .setRequired(true)
         ),
     async execute(interaction) {
         try {
             const queue = useQueue(interaction.guild.id);
-            const desiredPosition = Number(
-                interaction.options.getString("position", true)
-            );
-            console.log(desiredPosition);
+            const desiredPosition =
+                Number(interaction.options.getString("position", true)) - 1;
             if (!queue) {
                 return await interaction.reply(
                     "The queue is empty! Please add some songs to use this command"
@@ -26,20 +24,22 @@ module.exports = {
             }
             if (desiredPosition < queue.getSize()) {
                 //replace .jump with .skipto after testing queue functionality
-                queue.node.jump(desiredPosition);
+                queue.node.skipTo(desiredPosition);
                 const message = new EmbedBuilder().setDescription(
-                    `Jumping to position ${queue.node.getTrackPosition()} in queue, ${
-                        queue.currentTrack
-                    }!`
+                    `Jumping to position **${desiredPosition + 1}** in queue, **${
+                        queue.tracks.toArray()[desiredPosition].title
+                    }**!`
                 );
                 return await interaction.reply({ embeds: [message] });
             } else {
                 return await interaction.reply(
-                    "That position is not in the queue!"
+                    //test if this is valid embedbuilder syntax
+                    {embeds: [EmbedBuilder().setDescription("That position is not in the queue!")]}
                 );
             }
         } catch (e) {
-            return await interaction.reply("Please enter a valid position!");
+            return await interaction.reply(`Something went wrong!\n ${e}`);
+            // return await interaction.reply("Please enter a valid position!");
         }
     },
 };
