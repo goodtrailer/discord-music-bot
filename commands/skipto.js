@@ -35,7 +35,7 @@ module.exports = {
                             `Jumping to position **${
                                 desiredPosition + 1
                             }** in queue, **${
-                                queue.tracks.toArray()[desiredPosition].title
+                                await queue.tracks.toArray()[desiredPosition].title
                             }**!`
                         ),
                     ],
