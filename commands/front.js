@@ -3,7 +3,7 @@ const { useQueue } = require("discord-player");
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("moveToFront")
+        .setName("front")
         .setDescription(
             "Moves a song at the provided position to the front of the queue"
         )
