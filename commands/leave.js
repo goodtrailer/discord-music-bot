@@ -8,9 +8,21 @@ module.exports = {
 	async execute(interaction) {
 		const queue = useQueue(interaction.guild.id);
 		if (!queue) {
-			return interaction.reply("A queue does not exist!");
+			return interaction.reply({
+				embeds: [
+					new EmbedBuilder().setDescription(
+						"The queue is empty! Please add some songs to use this command"
+					),
+				],
+			});
 		}
 		queue.delete();
-		return interaction.reply("Leaving the voice channel");
+		return interaction.reply({
+			embeds: [
+				new EmbedBuilder().setDescription(
+					"Leaving the voice channel!"
+				),
+			],
+		});
 	},
 };

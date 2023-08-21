@@ -15,9 +15,13 @@ module.exports = {
         const player = useMainPlayer();
         const channel = interaction.member.voice.channel;
         if (!channel)
-            return interaction.reply(
-                "You are not connected to a voice channel!"
-            ); // make sure we have a voice channel
+            return interaction.reply({
+                embeds: [
+                    new EmbedBuilder().setDescription(
+                        "You are not connected to a voice channel!"
+                    ),
+                ],
+            });
         const query = interaction.options.getString("query", true); // we need input/query to play
 
         // let's defer the interaction as things can take time to process
@@ -30,10 +34,13 @@ module.exports = {
                     metadata: interaction, // we can access this metadata object using queue.metadata later on
                 },
             });
-
-            return await interaction.followUp(
-                `Added **${track.title}** to the queue!` 
-            );
+            return interaction.followUp({
+                embeds: [
+                    new EmbedBuilder().setDescription(
+                        `Added **${track.title}** to the queue!` 
+                    ),
+                ],
+            });
         } catch (e) {
             // let's return error if something failed
             return await interaction.followUp(`Something went wrong: ${e}`);
