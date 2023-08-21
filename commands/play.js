@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const { useMainPlayer } = require("discord-player");
+const { SlashCommandBuilder, EmbedBuilder, User } = require("discord.js");
+const { useMainPlayer, useQueue } = require("discord-player");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -34,6 +34,14 @@ module.exports = {
                     metadata: interaction, // we can access this metadata object using queue.metadata later on
                 },
             });
+            // const queue = useQueue(interaction.guild.id);
+            // if (queue) {
+            //     queue.tracks.toArray()[queue.getSize() - 1].requestedBy = interaction.user;
+            // } else {
+            //     queue.currentTrack.requestedBy = interaction.user;
+            // }
+            // console.log(queue.tracks.toArray()[queue.getSize() - 1].requestedBy);
+            // console.log(queue.tracks.toArray()[0].requestedBy);
             return interaction.followUp({
                 embeds: [
                     new EmbedBuilder().setDescription(

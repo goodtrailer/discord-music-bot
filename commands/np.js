@@ -5,28 +5,29 @@ module.exports = {
         .setName("np")
         .setDescription("Displays information about the current playing song"),
     async execute(interaction) {
+        const queue = useQueue(interaction.guild.id);
+        if (!queue) {
+            return interaction.reply({
+                embeds: [
+                    new EmbedBuilder().setDescription(
+                        "The queue is empty! Please add some songs to use this command"
+                    ),
+                ],
+            });
+        }
         try {
-            const queue = useQueue(interaction.guild.id);
-            if (!queue) {
-                return await interaction.reply({
-                    embeds: [
-                        new EmbedBuilder().setDescription(
-                            "The queue is empty! Please add some songs to use this command"
-                        ),
-                    ],
-                });
-            }
             await interaction.deferReply();
             const song = queue.currentTrack;
             const songInfo = new EmbedBuilder()
                 .setTitle(song.title)
+                .setURL(song.url)
                 .setDescription(
-                    `Requested by: ${song.requestedBy.avatar} ${song.requestedBy.username}\n\nDuration:${song.duration}`
+                    `Requested by: ${await queue.tracks.toArray()[0].requestedBy.username}\n\nDuration: ${song.duration}`
                 )
                 .setThumbnail(song.thumbnail);
             return interaction.followUp({ embeds: [songInfo] });
         } catch (e) {
-            return await interaction.reply(`Something went wrong!\n ${e}`);
+            return interaction.reply(`Something went wrong!\n ${e}`);
         }
     },
 };

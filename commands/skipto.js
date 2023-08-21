@@ -26,6 +26,7 @@ module.exports = {
                     ],
                 });
             }
+            
             if (desiredPosition < queue.getSize()) {
                 //replace .jump with .skipto after testing queue functionality
                 queue.node.skipTo(desiredPosition);

@@ -1,6 +1,6 @@
 # Discord Music Bot
 
-A discord bot used to play songs from YouTube and Spotify in your server. Most of the code is sourced from the DiscordJS and Discord Player quick-start guides and documentation located at https://discordjs.guide/#before-you-begin and https://discord-player.js.org/guide/welcome/welcome.
+A discord bot used to play songs from YouTube and Spotify in your server.
 
 ## Usage Instructions
 
