@@ -23,7 +23,7 @@ module.exports = {
 			// console.log(tracks[2]);
 			const currentTrack = queue.currentTrack;
 			// console.log(currentTrack)
-			await interaction.reply(`Queue: ${tracks}\n\nCurrent track ${currentTrack}`);
+			await interaction.reply(`Queue: ${tracks}\n\nCurrent track: ${currentTrack}`);
 		} catch (e) {
 			return await interaction.reply(`Something went wrong: ${e}`);
 		}

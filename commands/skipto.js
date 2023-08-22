@@ -29,7 +29,7 @@ module.exports = {
             // checks if the input is a valid position # -> we need the third conditional incase the queue is looped
             if (
                 desiredPosition < queue.getSize() &&
-                desiredPosition > 0 &&
+                desiredPosition >= 0 &&
                 desiredPosition !=
                     queue.node.getTrackPosition(queue.currentTrack)
             ) {

@@ -12,6 +12,7 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction) {
+        // console.log('e')
         const player = useMainPlayer();
         const channel = interaction.member.voice.channel;
         if (!channel)
@@ -22,25 +23,27 @@ module.exports = {
                     ),
                 ],
             });
+        // console.log('f');
         const query = interaction.options.getString("query", true); // we need input/query to play
 
         // let's defer the interaction as things can take time to process
         await interaction.deferReply();
 
         try {
+            // console.log('c');
             const { track } = await player.play(channel, query, {
                 nodeOptions: {
                     // nodeOptions are the options for guild node (aka your queue in simple word)
                     metadata: interaction, // we can access this metadata object using queue.metadata later on
                 },
             });
+            // console.log('d');
             const queue = useQueue(interaction.guild.id);
-            if (queue) {
-                // console.log("a");
-                queue.tracks.toArray()[queue.getSize() - 1].requestedBy = interaction.user;
+            if (queue.getSize() == 0) {
+                queue.currentTrack.requestedBy = interaction.user;
             } else {
                 // console.log("b");
-                queue.currentTrack.requestedBy = interaction.user;
+                queue.tracks.toArray()[queue.getSize() - 1].requestedBy = interaction.user;
             }
             // console.log(queue.tracks.toArray()[queue.getSize() - 1].requestedBy);
             // console.log(queue.tracks.toArray()[0].requestedBy);
