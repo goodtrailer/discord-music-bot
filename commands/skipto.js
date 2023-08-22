@@ -35,9 +35,10 @@ module.exports = {
             ) {
                 const desiredSong =
                     queue.tracks.toArray()[desiredPosition].title;
-                console.log("-----------------------------");
-                console.log(queue.tracks.toArray().length);
-                console.log(desiredPosition);
+                // for debugging
+                // console.log("-----------------------------");
+                // console.log(queue.tracks.toArray().length);
+                // console.log(desiredPosition);
                 queue.node.skipTo(desiredPosition);
                 return await interaction.reply({
                     embeds: [
