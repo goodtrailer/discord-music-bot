@@ -46,7 +46,7 @@ module.exports = {
             } catch {
                 afterSize = 0;
             }
-            console.log(track);
+            // console.log(track);
             const songsAddedToQueue = afterSize - beforeSize;
             // first usage of player
             if (songsAddedToQueue == 0) {
