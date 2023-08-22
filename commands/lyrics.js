@@ -24,7 +24,7 @@ module.exports = {
                 lyricsExtractor(/* 'optional genius API key' */);
 
             const lyrics = await lyricsFinder
-                .search("alan walker faded")
+                .search(queue.currentTrack.title)
                 .catch(() => null);
             if (!lyrics)
                 return interaction.followUp({

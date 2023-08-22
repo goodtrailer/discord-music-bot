@@ -8,7 +8,7 @@ module.exports = {
         .addStringOption((option) =>
             option
                 .setName("query")
-                .setDescription("The name or link to the song")
+                .setDescription("The name or link to the song or playlist")
                 .setRequired(true)
         ),
     async execute(interaction) {
