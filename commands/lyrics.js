@@ -28,7 +28,7 @@ module.exports = {
                 .catch(() => null);
             if (!lyrics)
                 return interaction.followUp({
-                    content: "No lyrics found",
+                    content: "No lyrics found!",
                     ephemeral: false,
                 });
 

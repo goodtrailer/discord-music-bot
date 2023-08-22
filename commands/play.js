@@ -12,7 +12,6 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction) {
-        // console.log('e')
         const player = useMainPlayer();
         const channel = interaction.member.voice.channel;
         if (!channel)
@@ -23,39 +22,49 @@ module.exports = {
                     ),
                 ],
             });
-        // console.log('f');
-        const query = interaction.options.getString("query", true); // we need input/query to play
 
-        // let's defer the interaction as things can take time to process
+        const query = interaction.options.getString("query", true); // we need input/query to play
         await interaction.deferReply();
 
         try {
-            // console.log('c');
+            const queue = useQueue(interaction.guild.id);
+            let beforeSize;
+            try {
+                beforeSize = queue.getSize();
+            } catch (e) {
+                beforeSize = 0;
+            }
             const { track } = await player.play(channel, query, {
                 nodeOptions: {
                     // nodeOptions are the options for guild node (aka your queue in simple word)
                     metadata: interaction, // we can access this metadata object using queue.metadata later on
                 },
             });
-            // console.log('d');
-            const queue = useQueue(interaction.guild.id);
-            if (queue.getSize() == 0) {
-                queue.currentTrack.requestedBy = interaction.user;
-            } else {
-                // console.log("b");
-                queue.tracks.toArray()[queue.getSize() - 1].requestedBy = interaction.user;
+            let afterSize;
+            try {
+                afterSize = queue.getSize();
+            } catch (e) {
+                afterSize = 0;
             }
-            // console.log(queue.tracks.toArray()[queue.getSize() - 1].requestedBy);
-            // console.log(queue.tracks.toArray()[0].requestedBy);
+            const songsAddedToQueue = afterSize - beforeSize;
+            if (songsAddedToQueue == 0) {
+                queue.currentTrack.requestedBy = interaction.user;
+            } else if (songsAddedToQueue > 1) {
+                for (let i = beforeSize; i < afterSize; i++) {
+                    queue.tracks.toArray()[i].requestedBy = interaction.user;
+                }
+            } else {
+                queue.tracks.toArray()[queue.getSize() - 1].requestedBy =
+                    interaction.user;
+            }
             return interaction.followUp({
                 embeds: [
                     new EmbedBuilder().setDescription(
-                        `Added **${track.title}** to the queue!` 
+                        `Added **${track.title}** to the queue!`
                     ),
                 ],
             });
         } catch (e) {
-            // let's return error if something failed
             return await interaction.followUp(`Something went wrong: ${e}`);
         }
     },
