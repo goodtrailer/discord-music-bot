@@ -19,6 +19,12 @@ module.exports = {
 		try {
 			const tracks = queue.tracks.toArray();
 			const currentTrack = queue.currentTrack;
+			const songsPerPage = 10;
+			for (let i = 0; i < queue.getSize(); i++) {
+				console.log("test");
+			}
+
+
 			await interaction.reply(`Queue: ${tracks}\n\nCurrent track: ${currentTrack}`);
 		} catch (e) {
 			return await interaction.reply(`Something went wrong: ${e}`);

@@ -31,7 +31,7 @@ module.exports = {
             let beforeSize;
             try {
                 beforeSize = queue.getSize();
-            } catch (e) {
+            } catch {
                 beforeSize = 0;
             }
             const { track } = await player.play(channel, query, {
@@ -43,13 +43,15 @@ module.exports = {
             let afterSize;
             try {
                 afterSize = queue.getSize();
-            } catch (e) {
+            } catch {
                 afterSize = 0;
             }
+            console.log(track);
             const songsAddedToQueue = afterSize - beforeSize;
+            // first usage of player
             if (songsAddedToQueue == 0) {
-                queue.currentTrack.requestedBy = interaction.user;
-            } else if (songsAddedToQueue > 1) {
+                track.requestedBy = interaction.user;
+            } else if (songsAddedToQueue > 1) { // handles cases of multiple songs (playlist) being loaded at once
                 for (let i = beforeSize; i < afterSize; i++) {
                     queue.tracks.toArray()[i].requestedBy = interaction.user;
                 }
