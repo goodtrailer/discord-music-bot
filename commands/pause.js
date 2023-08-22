@@ -7,7 +7,6 @@ module.exports = {
         .setDescription("Pauses the queue"),
     async execute(interaction) {
         const queue = useQueue(interaction.guild.id);
-        // checks for null queue
         if (!queue) {
             return interaction.reply({
                 embeds: [

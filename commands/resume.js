@@ -17,7 +17,6 @@ module.exports = {
             });
         }
         try {
-            // checks for null queue
             if (!queue.node.isPaused()) {
                 return interaction.reply({
                     embeds: [

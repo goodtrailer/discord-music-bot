@@ -18,8 +18,6 @@ module.exports = {
         try {
             await interaction.deferReply();
             const song = queue.currentTrack;
-            // console.log("a------------------");
-            // console.log(song.requestedBy.username);
             let bar = queue.node.createProgressBar({
                 length: 20,
                 queue: false,

@@ -28,25 +28,27 @@ module.exports = {
 
         try {
             const queue = useQueue(interaction.guild.id);
+
+            // checks size of queue before and after adding items to see if a single song was added or multiple
             let beforeSize;
             try {
                 beforeSize = queue.getSize();
             } catch {
                 beforeSize = 0;
             }
+
             const { track } = await player.play(channel, query, {
                 nodeOptions: {
-                    // nodeOptions are the options for guild node (aka your queue in simple word)
-                    metadata: interaction, // we can access this metadata object using queue.metadata later on
+                    metadata: interaction, 
                 },
             });
+
             let afterSize;
             try {
                 afterSize = queue.getSize();
             } catch {
                 afterSize = 0;
             }
-            // console.log(track);
             const songsAddedToQueue = afterSize - beforeSize;
             // first usage of player
             if (songsAddedToQueue == 0) {

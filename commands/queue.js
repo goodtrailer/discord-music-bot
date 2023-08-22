@@ -17,7 +17,6 @@ module.exports = {
             });
         }
         try {
-            // const tracks = queue.tracks.toArray();
             const currentTrack = queue.currentTrack;
             const songsPerPage = 10;
             let tracks = [];
@@ -30,7 +29,7 @@ module.exports = {
             await interaction.reply({
                 embeds: [
                     new EmbedBuilder().setDescription(
-                        `Queue: ${tracks}\n\nCurrent track: ${currentTrack}`
+                        `Queue: **${tracks}**\n\nCurrent track: **${currentTrack}**`
                     ),
                 ],
             });

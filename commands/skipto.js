@@ -26,7 +26,7 @@ module.exports = {
             });
         }
         try {
-            // checks if the input is a valid position # -> we need the third conditional incase the queue is looped
+            // checks if the input is a valid position #
             if (
                 desiredPosition < queue.getSize() &&
                 desiredPosition >= 0 &&
@@ -35,10 +35,6 @@ module.exports = {
             ) {
                 const desiredSong =
                     queue.tracks.toArray()[desiredPosition].title;
-                // for debugging
-                // console.log("-----------------------------");
-                // console.log(queue.tracks.toArray().length);
-                // console.log(desiredPosition);
                 queue.node.skipTo(desiredPosition);
                 return await interaction.reply({
                     embeds: [

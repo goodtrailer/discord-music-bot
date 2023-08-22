@@ -1,16 +1,7 @@
 // Require the necessary discord.js classes
-const {
-    Client,
-    Collection,
-    Events,
-    GatewayIntentBits,
-    EmbedBuilder,
-} = require("discord.js");
+const { Client, Collection, Events, GatewayIntentBits, EmbedBuilder } = require("discord.js");
 const { Player } = require("discord-player");
-const {
-    YouTubeExtractor,
-    SpotifyExtractor,
-} = require("@discord-player/extractor");
+const { YouTubeExtractor, SpotifyExtractor } = require("@discord-player/extractor");
 const fs = require("node:fs");
 const path = require("node:path");
 const dotenv = require("dotenv");
@@ -44,7 +35,7 @@ setupPlayer().then(() => {
     /*
 		Dynamic command retrieval -> Looks in the commands subdirectory and filters out all the non-js files. Afterwards, set the js files as commands
 		Sourced from DiscordJS documentation
-		*/
+	*/
     client.commands = new Collection();
 
     const commandsPath = path.join(__dirname, "commands");
