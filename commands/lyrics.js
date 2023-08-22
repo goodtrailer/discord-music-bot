@@ -7,17 +7,17 @@ module.exports = {
     .setName("lyrics")
     .setDescription("Displays the lyrics of the current song"),
     async execute(interaction) {
+        const queue = useQueue(interaction.guild.id);
+        if (!queue) {
+            return await interaction.reply({
+                embeds: [
+                    new EmbedBuilder().setDescription(
+                        "The queue is empty! Please add some songs to use this command"
+                    ),
+                ],
+            });
+        }
         try {
-            const queue = useQueue(interaction.guild.id);
-            if (!queue) {
-                return await interaction.reply({
-                    embeds: [
-                        new EmbedBuilder().setDescription(
-                            "The queue is empty! Please add some songs to use this command"
-                        ),
-                    ],
-                });
-            }
             await interaction.deferReply();
 
             const lyricsFinder =

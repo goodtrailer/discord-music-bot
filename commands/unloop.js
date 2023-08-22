@@ -6,17 +6,17 @@ module.exports = {
         .setName("unloop")
         .setDescription("Un-loops the queue"),
     async execute(interaction) {
+        const queue = useQueue(interaction.guild.id);
+        if (!queue) {
+            return interaction.reply({
+                embeds: [
+                    new EmbedBuilder().setDescription(
+                        "The queue is empty! Please add some songs to use this command"
+                    ),
+                ],
+            });
+        }
         try {
-            const queue = useQueue(interaction.guild.id);
-            if (!queue) {
-                return interaction.reply({
-                    embeds: [
-                        new EmbedBuilder().setDescription(
-                            "The queue is empty! Please add some songs to use this command"
-                        ),
-                    ],
-                });
-            }
             queue.setRepeatMode(0);
             return interaction.reply({
                 embeds: [

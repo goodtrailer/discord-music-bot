@@ -6,17 +6,17 @@ module.exports = {
         .setName("skip")
         .setDescription("Skips to the next track in the queue"),
     async execute(interaction) {
+        const queue = useQueue(interaction.guild.id);
+        if (!queue) {
+            return interaction.reply({
+                embeds: [
+                    new EmbedBuilder().setDescription(
+                        "The queue is empty! Please add some songs to use this command"
+                    ),
+                ],
+            });
+        }
         try {
-            const queue = useQueue(interaction.guild.id);
-            if (!queue) {
-                return interaction.reply({
-                    embeds: [
-                        new EmbedBuilder().setDescription(
-                            "The queue is empty! Please add some songs to use this command"
-                        ),
-                    ],
-                });
-            }
             const skippedTrack = queue.currentTrack.title;
             queue.node.skip();
             let endMessage = "";

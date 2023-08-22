@@ -6,18 +6,18 @@ module.exports = {
         .setName("resume")
         .setDescription("Resumes the queue"),
     async execute(interaction) {
+        const queue = useQueue(interaction.guild.id);
+        if (!queue) {
+            return interaction.reply({
+                embeds: [
+                    new EmbedBuilder().setDescription(
+                        "The queue is empty! Please add some songs to use this command"
+                    ),
+                ],
+            });
+        }
         try {
-            const queue = useQueue(interaction.guild.id);
             // checks for null queue
-            if (!queue) {
-                return interaction.reply({
-                    embeds: [
-                        new EmbedBuilder().setDescription(
-                            "The queue is empty! Please add some songs to use this command"
-                        ),
-                    ],
-                });
-            }
             if (!queue.node.isPaused()) {
                 return interaction.reply({
                     embeds: [

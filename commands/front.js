@@ -16,19 +16,19 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction) {
+        const queue = useQueue(interaction.guild.id);
+        const songPosition =
+            Number(interaction.options.getString("position", true)) - 1;
+        if (!queue) {
+            return await interaction.reply({
+                embeds: [
+                    new EmbedBuilder().setDescription(
+                        "The queue is empty! Please add some songs to use this command"
+                    ),
+                ],
+            });
+        }
         try {
-            const queue = useQueue(interaction.guild.id);
-            const songPosition =
-                Number(interaction.options.getString("position", true)) - 1;
-            if (!queue) {
-                return await interaction.reply({
-                    embeds: [
-                        new EmbedBuilder().setDescription(
-                            "The queue is empty! Please add some songs to use this command"
-                        ),
-                    ],
-                });
-            }
             if (songPosition < queue.getSize()) {
                 const song = queue.tracks.toArray()[songPosition];
                 queue.insertTrack(song, 0);
