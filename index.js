@@ -1,7 +1,16 @@
 // Require the necessary discord.js classes
-const { Client, Collection, Events, GatewayIntentBits, EmbedBuilder } = require("discord.js");
+const {
+    Client,
+    Collection,
+    Events,
+    GatewayIntentBits,
+    EmbedBuilder,
+} = require("discord.js");
 const { Player } = require("discord-player");
-const { YouTubeExtractor, SpotifyExtractor } = require("@discord-player/extractor");
+const {
+    YouTubeExtractor,
+    SpotifyExtractor,
+} = require("@discord-player/extractor");
 const fs = require("node:fs");
 const path = require("node:path");
 const dotenv = require("dotenv");
@@ -10,7 +19,12 @@ dotenv.config();
 
 // Create a new client instance
 const client = new Client({
-    intents: [GatewayIntentBits.Guilds, "GuildVoiceStates"],
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildMessageReactions,
+        "GuildVoiceStates",
+    ],
 });
 const player = new Player(client);
 
