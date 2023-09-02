@@ -28,9 +28,10 @@ module.exports = {
                 .setDescription(bar)
                 .setThumbnail(song.thumbnail)
                 .setFooter({
-                    text: `Requested by: ${song.requestedBy.username}`,
+                    text: `Requested by ${song.requestedBy.username}`,
                     iconURL: song.requestedBy.avatarURL(),
-                });
+                })
+                .setTimestamp();
             return interaction.followUp({ embeds: [songInfo] });
         } catch (e) {
             return interaction.followUp(`Something went wrong!\n ${e}`);
