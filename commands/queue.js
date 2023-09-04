@@ -1,5 +1,5 @@
-const { useQueue } = require('discord-player');
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { useQueue } = require('discord-player');
 
 function getNextPage(currPage, tracks, reaction)
 {
