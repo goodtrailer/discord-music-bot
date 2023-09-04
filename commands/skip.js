@@ -10,9 +10,11 @@ module.exports = {
         if (!queue) {
             return interaction.reply({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        "The queue is empty! Please add some songs to use this command"
-                    ),
+                    new EmbedBuilder()
+                        .setDescription(
+                            "The queue is empty! Please add some songs to use this command"
+                        )
+                        .setColor("e8d5ac"),
                 ],
             });
         }
@@ -26,9 +28,11 @@ module.exports = {
             }
             return interaction.reply({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        `Skipped **${skippedTrack}**\n${endMessage}`
-                    ),
+                    new EmbedBuilder()
+                        .setDescription(
+                            `Skipped **${skippedTrack}**\n${endMessage}`
+                        )
+                        .setColor("e8d5ac"),
                 ],
             });
         } catch (e) {

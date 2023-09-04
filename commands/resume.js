@@ -10,9 +10,11 @@ module.exports = {
         if (!queue) {
             return interaction.reply({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        "The queue is empty! Please add some songs to use this command"
-                    ),
+                    new EmbedBuilder()
+                        .setDescription(
+                            "The queue is empty! Please add some songs to use this command"
+                        )
+                        .setColor("e8d5ac"),
                 ],
             });
         }
@@ -20,18 +22,18 @@ module.exports = {
             if (!queue.node.isPaused()) {
                 return interaction.reply({
                     embeds: [
-                        new EmbedBuilder().setDescription(
-                            "The queue is already playing!"
-                        ),
+                        new EmbedBuilder()
+                            .setDescription("The queue is already playing!")
+                            .setColor("e8d5ac"),
                     ],
                 });
             }
             queue.node.setPaused(false);
             return interaction.reply({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        "The queue has been resumed!"
-                    ),
+                    new EmbedBuilder()
+                        .setDescription("The queue has been resumed!")
+                        .setColor("e8d5ac"),
                 ],
             });
         } catch (e) {

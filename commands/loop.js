@@ -10,19 +10,23 @@ module.exports = {
         if (!queue) {
             return interaction.reply({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        "The queue is empty! Please add some songs to use this command"
-                    ),
+                    new EmbedBuilder()
+                        .setDescription(
+                            "The queue is empty! Please add some songs to use this command"
+                        )
+                        .setColor("e8d5ac"),
                 ],
             });
         }
         try {
             queue.setRepeatMode(2);
-            return interaction.reply({
-                embeds: [
-                    new EmbedBuilder().setDescription("Looping the queue"),
-                ],
-            });
+            return interaction
+                .reply({
+                    embeds: [
+                        new EmbedBuilder().setDescription("Looping the queue"),
+                    ],
+                })
+                .setColor("e8d5ac");
         } catch (e) {
             return interaction.reply(`Something went wrong: ${e}`);
         }

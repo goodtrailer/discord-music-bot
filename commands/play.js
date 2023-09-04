@@ -39,7 +39,7 @@ module.exports = {
 
             const { track } = await player.play(channel, query, {
                 nodeOptions: {
-                    metadata: interaction, 
+                    metadata: interaction,
                 },
             });
 
@@ -53,7 +53,8 @@ module.exports = {
             // first usage of player
             if (songsAddedToQueue == 0) {
                 track.requestedBy = interaction.user;
-            } else if (songsAddedToQueue > 1) { // handles cases of multiple songs (playlist) being loaded at once
+            } else if (songsAddedToQueue > 1) {
+                // handles cases of multiple songs (playlist) being loaded at once
                 for (let i = beforeSize; i < afterSize; i++) {
                     queue.tracks.toArray()[i].requestedBy = interaction.user;
                 }
@@ -63,9 +64,11 @@ module.exports = {
             }
             return interaction.followUp({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        `Added **${track.title}** to the queue!`
-                    ),
+                    new EmbedBuilder()
+                        .setDescription(
+                            `Added **${track.title}** to the queue!`
+                        )
+                        .setColor("e8d5ac"),
                 ],
             });
         } catch (e) {

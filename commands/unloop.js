@@ -10,9 +10,11 @@ module.exports = {
         if (!queue) {
             return interaction.reply({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        "The queue is empty! Please add some songs to use this command"
-                    ),
+                    new EmbedBuilder()
+                        .setDescription(
+                            "The queue is empty! Please add some songs to use this command"
+                        )
+                        .setColor("e8d5ac"),
                 ],
             });
         }
@@ -20,9 +22,9 @@ module.exports = {
             queue.setRepeatMode(0);
             return interaction.reply({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        "The queue has been un-looped!"
-                    ),
+                    new EmbedBuilder()
+                        .setDescription("The queue has been un-looped!")
+                        .setColor("e8d5ac"),
                 ],
             });
         } catch (e) {

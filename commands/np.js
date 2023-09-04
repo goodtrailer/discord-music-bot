@@ -9,9 +9,11 @@ module.exports = {
         if (!queue) {
             return interaction.reply({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        "The queue is empty! Please add some songs to use this command"
-                    ),
+                    new EmbedBuilder()
+                        .setDescription(
+                            "The queue is empty! Please add some songs to use this command"
+                        )
+                        .setColor("e8d5ac"),
                 ],
             });
         }
@@ -31,7 +33,8 @@ module.exports = {
                     text: `Requested by ${song.requestedBy.username}`,
                     iconURL: song.requestedBy.avatarURL(),
                 })
-                .setTimestamp();
+                .setTimestamp()
+                .setColor("e8d5ac");
             return interaction.followUp({ embeds: [songInfo] });
         } catch (e) {
             return interaction.followUp(`Something went wrong!\n ${e}`);

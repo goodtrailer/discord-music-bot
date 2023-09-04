@@ -10,9 +10,11 @@ module.exports = {
         if (!queue) {
             return interaction.reply({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        "The queue is empty! Please add some songs to use this command"
-                    ),
+                    new EmbedBuilder()
+                        .setDescription(
+                            "The queue is empty! Please add some songs to use this command"
+                        )
+                        .setColor("e8d5ac"),
                 ],
             });
         }
@@ -20,7 +22,9 @@ module.exports = {
             queue.tracks.shuffle();
             return interaction.followUp({
                 embeds: [
-                    new EmbedBuilder().setDescription("Shuffling the queue!"),
+                    new EmbedBuilder()
+                        .setDescription("Shuffling the queue!")
+                        .setColor("e8d5ac"),
                 ],
             });
         } catch (e) {

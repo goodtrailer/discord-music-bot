@@ -22,9 +22,11 @@ module.exports = {
         if (!queue) {
             return await interaction.reply({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        "The queue is empty! Please add some songs to use this command"
-                    ),
+                    new EmbedBuilder()
+                        .setDescription(
+                            "The queue is empty! Please add some songs to use this command"
+                        )
+                        .setColor("e8d5ac"),
                 ],
             });
         }
@@ -34,17 +36,21 @@ module.exports = {
                 queue.insertTrack(song, 0);
                 return await interaction.reply({
                     embeds: [
-                        new EmbedBuilder().setDescription(
-                            `Moved **${song.title}** to the front of the queue!`
-                        ),
+                        new EmbedBuilder()
+                            .setDescription(
+                                `Moved **${song.title}** to the front of the queue!`
+                            )
+                            .setColor("e8d5ac"),
                     ],
                 });
             } else {
                 return await interaction.reply({
                     embeds: [
-                        new EmbedBuilder().setDescription(
-                            "That position is not in the queue!"
-                        ),
+                        new EmbedBuilder()
+                            .setDescription(
+                                "That position is not in the queue!"
+                            )
+                            .setColor("e8d5ac"),
                     ],
                 });
             }

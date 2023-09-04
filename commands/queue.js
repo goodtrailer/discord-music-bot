@@ -10,9 +10,11 @@ module.exports = {
         if (!queue) {
             return interaction.reply({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        "The queue is empty! Please add some songs to use this command"
-                    ),
+                    new EmbedBuilder()
+                        .setDescription(
+                            "The queue is empty! Please add some songs to use this command"
+                        )
+                        .setColor("e8d5ac"),
                 ],
             });
         }
@@ -27,7 +29,12 @@ module.exports = {
                 const songs = queue.tracks.toArray().slice(i, i + songsPerPage);
                 tracks.push(songs);
             }
-            let queueDisplay = createQueueEmbed(interaction, queue, tracks, queuePage);
+            let queueDisplay = createQueueEmbed(
+                interaction,
+                queue,
+                tracks,
+                queuePage
+            );
             queueDisplay.createReactionCollector;
 
             message = await interaction.editReply({
@@ -64,7 +71,6 @@ module.exports = {
         }
     },
 };
-// need to update value of current track
 
 function handleReactions(
     interaction,
@@ -105,7 +111,12 @@ function handleReactions(
                 }
                 if (edited) {
                     // update the queue embed display
-                    let editedQueueDisplay = createQueueEmbed(interaction, queue, tracks, queuePage);
+                    let editedQueueDisplay = createQueueEmbed(
+                        interaction,
+                        queue,
+                        tracks,
+                        queuePage
+                    );
                     interaction.editReply({ embeds: [editedQueueDisplay] });
                     handleReactions(
                         interaction,

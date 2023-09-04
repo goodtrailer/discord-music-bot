@@ -1,11 +1,11 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { useQueue } = require("discord-player");
-const { lyricsExtractor } =  require("@discord-player/extractor");
+const { lyricsExtractor } = require("@discord-player/extractor");
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName("lyrics")
-    .setDescription("Displays the lyrics of the current song"),
+        .setName("lyrics")
+        .setDescription("Displays the lyrics of the current song"),
     async execute(interaction) {
         const queue = useQueue(interaction.guild.id);
         if (!queue) {
@@ -48,7 +48,7 @@ module.exports = {
                         ? `${trimmedLyrics}...`
                         : trimmedLyrics
                 )
-                .setColor("Yellow");
+                .setColor("e8d5ac");
 
             return interaction.followUp({ embeds: [embed] });
         } catch (e) {
