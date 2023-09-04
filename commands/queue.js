@@ -7,7 +7,6 @@ module.exports = {
         .setDescription("Lists all the songs in the queue"),
     async execute(interaction) {
         const queue = useQueue(interaction.guild.id);
-        console.log(interaction.guild);
         if (!queue) {
             return interaction.reply({
                 embeds: [
@@ -20,7 +19,6 @@ module.exports = {
         try {
             await interaction.deferReply();
             let currentTrack = queue.currentTrack;
-            // console.log(currentTrack);
             const songsPerPage = 10;
             let tracks = [];
             let queuePage = 0;
@@ -29,31 +27,11 @@ module.exports = {
                 const songs = queue.tracks.toArray().slice(i, i + songsPerPage);
                 tracks.push(songs);
             }
-
-            let queueString = "";
-
-            // need to find a way to dynamically print queue incase there's only like 4 songs in queue, if you display hard coded 10, then it'll error so find a workaround
-            let test = new EmbedBuilder()
-                .setAuthor({
-                    name: `${interaction.guild.name}'s Queue`,
-                    // iconURL: interaction.guild.icon,
-                })
-                .setDescription(
-                    `Notice: Reactions are not supported yet\nQueue: ${tracks[queuePage]}\n\nCurrent track: **${currentTrack}**`
-                )
-                .setThumbnail(currentTrack.thumbnail)
-                .setFooter({
-                    text: `Page ${queuePage + 1} of ${
-                        tracks.length
-                    } | Tracks Queued: ${queue.getSize()} | Total Duration: ${
-                        queue.durationFormatted
-                    }`,
-                })
-                .setColor("e8d5ac");
-            test.createReactionCollector;
+            let queueDisplay = createQueueEmbed(interaction, queue, tracks, queuePage);
+            queueDisplay.createReactionCollector;
 
             message = await interaction.editReply({
-                embeds: [test],
+                embeds: [queueDisplay],
             });
 
             // this ensures that the reactions are always placed in order
@@ -127,25 +105,8 @@ function handleReactions(
                 }
                 if (edited) {
                     // update the queue embed display
-                    // console.log(currentTrack);
-                    test = new EmbedBuilder()
-                        .setAuthor({
-                            name: `${interaction.guild.name}'s Queue`,
-                            // iconURL: interaction.guild.icon,
-                        })
-                        .setDescription(
-                            `Notice: Reactions are not supported yet\nQueue: ${tracks[queuePage]}\n\nCurrent track: **${currentTrack}**`
-                        )
-                        .setThumbnail(currentTrack.thumbnail)
-                        .setFooter({
-                            text: `Page ${queuePage + 1} of ${
-                                tracks.length
-                            } | Tracks Queued: ${queue.getSize()} | Total Duration: ${
-                                queue.durationFormatted
-                            }`,
-                        })
-                        .setColor("e8d5ac");
-                    interaction.editReply({ embeds: [test] });
+                    let editedQueueDisplay = createQueueEmbed(interaction, queue, tracks, queuePage);
+                    interaction.editReply({ embeds: [editedQueueDisplay] });
                     handleReactions(
                         interaction,
                         message,
@@ -168,5 +129,31 @@ function handleReactions(
 
 function createQueuePageString(tracks, queuePage) {
     let page = "";
-    for (let i = 0; i < tracks[queuePage].length; i++) {}
+    for (let i = 1; i <= tracks[queuePage].length; i++) {
+        page += `**${i + queuePage * 10}**. ${tracks[queuePage][i - 1]}\n`;
+    }
+    return page;
+}
+
+function createQueueEmbed(interaction, queue, tracks, queuePage) {
+    let currentTrack = queue.currentTrack;
+    let queueString = `🔊  Current Track: **${currentTrack}**\n\n🔊  Queue:\n${createQueuePageString(
+        tracks,
+        queuePage
+    )}`;
+    return new EmbedBuilder()
+        .setAuthor({
+            name: `${interaction.guild.name}'s Queue`,
+            // iconURL: interaction.guild.icon,
+        })
+        .setDescription(queueString)
+        .setThumbnail(currentTrack.thumbnail)
+        .setFooter({
+            text: `Page ${queuePage + 1} of ${
+                tracks.length
+            } | Tracks Queued: ${queue.getSize()} | Total Duration: ${
+                queue.durationFormatted
+            }`,
+        })
+        .setColor("e8d5ac");
 }
