@@ -20,13 +20,13 @@ module.exports = {
         }
         try {
             queue.setRepeatMode(2);
-            return interaction
-                .reply({
-                    embeds: [
-                        new EmbedBuilder().setDescription("Looping the queue"),
-                    ],
-                })
-                .setColor("e8d5ac");
+            return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                        .setDescription("Looping the queue")
+                        .setColor("e8d5ac"),
+                ],
+            });
         } catch (e) {
             return interaction.reply(`Something went wrong: ${e}`);
         }

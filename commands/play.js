@@ -30,10 +30,7 @@ module.exports = {
             const queue = useQueue(interaction.guild.id);
 
             // checks size of queue before and after adding items to see if a single song was added or multiple
-            let beforeSize;
-            if (queue) {
-                beforeSize = queue.getSize();
-            }
+            let beforeSize = queue?.getSize() ?? 0;
 
             const { track } = await player.play(channel, query, {
                 nodeOptions: {
@@ -41,18 +38,17 @@ module.exports = {
                 },
             });
 
-            let afterSize;
-            if (queue) {
-                afterSize = queue.getSize();
-            }
+            let afterSize = queue?.getSize() ?? 0;
             const songsAddedToQueue = afterSize - beforeSize;
 
-            // first usage of player, does not error because short circuit evaluation
-            if (!queue || songsAddedToQueue == 1) {
+            // first usage of player/single song added
+            if (!queue || songsAddedToQueue == 0 || songsAddedToQueue == 1) {
                 track.requestedBy = interaction.user;
             } else { // handles cases of multiple songs (playlist) being loaded at once
+                console.log('multiple');
                 for (let i = beforeSize; i < afterSize; i++) {
                     queue.tracks.toArray()[i].requestedBy = interaction.user;
+                    console.log(queue.tracks.toArray()[i].requestedBy.username);
                 }
             }
             return interaction.followUp({

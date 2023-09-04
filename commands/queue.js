@@ -87,11 +87,11 @@ function handleReactions(
                 filter: collectorFilter,
                 max: 1,
                 time: 15000,
-                errors: ["time"],
             })
             .then(async (collected) => {
                 const reaction = collected.first();
                 let edited = false;
+
                 // need to remove user's emoji after
                 if (reaction.emoji.name === "⏪") {
                     queuePage = 0;
@@ -131,7 +131,8 @@ function handleReactions(
             })
             .catch((collected) => {
                 message.reply(`reaction collector error: ${collected}`);
-                console.log(collected);
+                console.log("stack trace:");
+                console.log(collected, collected.stack);
             });
     } catch (e) {
         return interaction.editReply(`Something went wrong: ${e}`);
@@ -140,8 +141,11 @@ function handleReactions(
 
 function createQueuePageString(tracks, queuePage) {
     let page = "";
-    for (let i = 1; i <= tracks[queuePage].length; i++) {
-        page += `**${i + queuePage * 10}**. ${tracks[queuePage][i - 1]}\n`;
+    let queueExists = tracks[queuePage]?.length ?? false;
+    if (queueExists) {
+        for (let i = 1; i <= tracks[queuePage].length; i++) {
+            page += `**${i + queuePage * 10}**. ${tracks[queuePage][i - 1]}\n`;
+        }
     }
     return page;
 }
@@ -162,7 +166,7 @@ function createQueueEmbed(interaction, queue, tracks, queuePage) {
         .setFooter({
             text: `Page ${queuePage + 1} of ${
                 tracks.length
-            } | Tracks Queued: ${queue.getSize()} | Total Duration: ${
+            }  |  Tracks Queued: ${queue.getSize()}  |  Total Duration: ${
                 queue.durationFormatted
             }`,
         })
