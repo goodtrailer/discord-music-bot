@@ -22,9 +22,7 @@ module.exports = {
         queue.delete();
         return interaction.reply({
             embeds: [
-                new EmbedBuilder().setDescription(
-                    'Leaving the voice channel!',
-                ),
+                new EmbedBuilder().setDescription('Leaving the voice channel!'),
             ],
         });
     },

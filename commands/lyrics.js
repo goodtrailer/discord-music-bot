@@ -49,11 +49,9 @@ module.exports = {
                     iconURL: lyrics.artist.image,
                     url: lyrics.artist.url,
                 })
-                .setDescription(
-                    trimmedLyrics.length === 1997
-                        ? `${trimmedLyrics}...`
-                        : trimmedLyrics,
-                )
+                .setDescription(trimmedLyrics.length === 1997
+                    ? `${trimmedLyrics}...`
+                    : trimmedLyrics)
                 .setColor('Yellow');
 
             return interaction.followUp({ embeds: [embed] });

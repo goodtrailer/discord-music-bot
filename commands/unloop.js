@@ -24,9 +24,7 @@ module.exports = {
             queue.setRepeatMode(0);
             return interaction.reply({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        'The queue has been un-looped!',
-                    ),
+                    new EmbedBuilder().setDescription('The queue has been un-looped!'),
                 ],
             });
         }

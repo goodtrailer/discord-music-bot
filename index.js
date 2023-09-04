@@ -44,9 +44,7 @@ setupPlayer().then(() =>
         // queue.metadata.channel.send(`Started playing **${track.title}**!`);
         queue.metadata.channel.send({
             embeds: [
-                new EmbedBuilder().setDescription(
-                    `Started playing **${track.title}**!`,
-                ),
+                new EmbedBuilder().setDescription(`Started playing **${track.title}**!`),
             ],
         });
     });
