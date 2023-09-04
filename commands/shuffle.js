@@ -1,29 +1,35 @@
-const { useQueue } = require("discord-player");
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { useQueue } = require('discord-player');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("shuffle")
-        .setDescription("Shuffles the queue"),
-    async execute(interaction) {
+        .setName('shuffle')
+        .setDescription('Shuffles the queue'),
+    async execute(interaction)
+    {
         const queue = useQueue(interaction.guild.id);
-        if (!queue) {
+        if (!queue)
+
             return interaction.reply({
                 embeds: [
                     new EmbedBuilder().setDescription(
-                        "The queue is empty! Please add some songs to use this command"
+                        'The queue is empty! Please add some songs to use this command',
                     ),
                 ],
             });
-        }
-        try {
+
+        try
+        {
             queue.tracks.shuffle();
             return interaction.followUp({
                 embeds: [
-                    new EmbedBuilder().setDescription("Shuffling the queue!"),
+                    new EmbedBuilder().setDescription('Shuffling the queue!'),
                 ],
             });
-        } catch (e) {
+        }
+        catch (e)
+        {
+            console.error(e, e.stack);
             return interaction.reply(`Something went wrong: ${e}`);
         }
     },

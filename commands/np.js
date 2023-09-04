@@ -1,24 +1,28 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const { useQueue } = require("discord-player");
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { useQueue } = require('discord-player');
+
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("np")
-        .setDescription("Displays information about the current playing song"),
-    async execute(interaction) {
+        .setName('np')
+        .setDescription('Displays information about the current playing song'),
+    async execute(interaction)
+    {
         const queue = useQueue(interaction.guild.id);
-        if (!queue) {
+        if (!queue)
+
             return interaction.reply({
                 embeds: [
                     new EmbedBuilder().setDescription(
-                        "The queue is empty! Please add some songs to use this command"
+                        'The queue is empty! Please add some songs to use this command',
                     ),
                 ],
             });
-        }
-        try {
+
+        try
+        {
             await interaction.deferReply();
             const song = queue.currentTrack;
-            let bar = queue.node.createProgressBar({
+            const bar = queue.node.createProgressBar({
                 length: 20,
                 queue: false,
             });
@@ -33,7 +37,10 @@ module.exports = {
                 })
                 .setTimestamp();
             return interaction.followUp({ embeds: [songInfo] });
-        } catch (e) {
+        }
+        catch (e)
+        {
+            console.error(e, e.stack);
             return interaction.followUp(`Something went wrong!\n ${e}`);
         }
     },

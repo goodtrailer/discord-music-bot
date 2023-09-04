@@ -1,34 +1,36 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const { useQueue } = require("discord-player");
-const { lyricsExtractor } =  require("@discord-player/extractor");
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { useQueue } = require('discord-player');
+const { lyricsExtractor } = require('@discord-player/extractor');
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName("lyrics")
-    .setDescription("Displays the lyrics of the current song"),
-    async execute(interaction) {
+        .setName('lyrics')
+        .setDescription('Displays the lyrics of the current song'),
+
+    async execute(interaction)
+    {
         const queue = useQueue(interaction.guild.id);
-        if (!queue) {
-            return await interaction.reply({
+        if (!queue)
+            return interaction.reply({
                 embeds: [
-                    new EmbedBuilder().setDescription(
-                        "The queue is empty! Please add some songs to use this command"
-                    ),
+                    new EmbedBuilder()
+                        .setDescription('The queue is empty! Please add some songs to use this command'),
                 ],
             });
-        }
-        try {
+
+        try
+        {
             await interaction.deferReply();
 
-            const lyricsFinder =
-                lyricsExtractor(/* 'optional genius API key' */);
+            const lyricsFinder = lyricsExtractor(/* 'optional genius API key' */);
 
             const lyrics = await lyricsFinder
                 .search(queue.currentTrack.title)
-                .catch(() => null);
+                .catch(e => console.error(e, e.stack));
             if (!lyrics)
+
                 return interaction.followUp({
-                    content: "No lyrics found!",
+                    content: 'No lyrics found!',
                     ephemeral: false,
                 });
 
@@ -46,13 +48,16 @@ module.exports = {
                 .setDescription(
                     trimmedLyrics.length === 1997
                         ? `${trimmedLyrics}...`
-                        : trimmedLyrics
+                        : trimmedLyrics,
                 )
-                .setColor("Yellow");
+                .setColor('Yellow');
 
             return interaction.followUp({ embeds: [embed] });
-        } catch (e) {
-            return await interaction.reply(`Something went wrong!\n ${e}`);
+        }
+        catch (e)
+        {
+            console.error(e, e.stack);
+            return interaction.reply(`Something went wrong!\n ${e}`);
         }
     },
 };
