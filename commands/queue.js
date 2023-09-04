@@ -37,7 +37,7 @@ module.exports = {
             );
             queueDisplay.createReactionCollector;
 
-            message = await interaction.editReply({
+            let message = await interaction.editReply({
                 embeds: [queueDisplay],
             });
 

@@ -37,13 +37,11 @@ async function setupPlayer() {
 
 setupPlayer().then(() => {
     player.events.on("playerStart", (queue, track) => {
-        // we will later define queue.metadata object while creating the queue
-        // queue.metadata.channel.send(`Started playing **${track.title}**!`);
         queue.metadata.channel.send({
             embeds: [
-                new EmbedBuilder().setDescription(
-                    `Started playing **${track.title}**!`
-                ),
+                new EmbedBuilder()
+                    .setDescription(`Started playing **${track.title}**!`)
+                    .setColor("e8d5ac"),
             ],
         });
     });
