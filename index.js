@@ -26,6 +26,7 @@ const client = new Client({
         "GuildVoiceStates",
     ],
 });
+
 const player = new Player(client);
 
 async function setupPlayer() {
