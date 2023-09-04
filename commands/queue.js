@@ -11,7 +11,7 @@ function getNextPage(currPage, tracks, reaction)
         return currPage + 1;
     if (reaction.emoji.name === '⏩')
         return tracks.length - 1;
-    
+
     return currPage;
 }
 
@@ -40,14 +40,15 @@ module.exports = {
     async execute(interaction)
     {
         const queue = useQueue(interaction.guild.id);
-
         if (!queue)
+        {
             return interaction.reply({
                 embeds: [
                     new EmbedBuilder()
                         .setDescription('The queue is empty! Please add some songs to use this command'),
                 ],
             });
+        }
 
         try
         {

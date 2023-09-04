@@ -6,7 +6,7 @@
     "rules": {
         "indent": ["warn", 4],
         "brace-style": ["warn", "allman"],
-        "curly": ["warn", "multi"],
+        "curly": ["warn", "multi-or-nest", "consistent"],
         "no-console": "off",
         "nonblock-statement-body-position": ["warn", "below"],
         "import/no-dynamic-require": "off",

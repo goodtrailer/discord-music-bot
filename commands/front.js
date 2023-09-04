@@ -13,16 +13,17 @@ module.exports = {
     async execute(interaction)
     {
         const queue = useQueue(interaction.guild.id);
-        const songPosition = Number(interaction.options.getString('position', true)) - 1;
         if (!queue)
-
+        {
             return interaction.reply({
                 embeds: [
                     new EmbedBuilder()
                         .setDescription('The queue is empty! Please add some songs to use this command'),
                 ],
             });
+        }
 
+        const songPosition = Number(interaction.options.getString('position', true)) - 1;
         try
         {
             if (songPosition < queue.getSize())

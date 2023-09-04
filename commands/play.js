@@ -12,19 +12,19 @@ module.exports = {
 
     async execute(interaction)
     {
-        const player = useMainPlayer();
         const { channel } = interaction.member.voice;
         if (!channel)
+        {
             return interaction.reply({
                 embeds: [
                     new EmbedBuilder()
                         .setDescription('You are not connected to a voice channel!'),
                 ],
             });
+        }
 
         const query = interaction.options.getString('query', true); // we need input/query to play
         await interaction.deferReply();
-
         try
         {
             const queue = useQueue(interaction.guild.id);
@@ -33,6 +33,7 @@ module.exports = {
             // or multiple
             const beforeSize = queue?.getSize() ?? 0;
 
+            const player = useMainPlayer();
             const { track } = await player.play(channel, query, {
                 nodeOptions: {
                     metadata: interaction,
@@ -42,26 +43,26 @@ module.exports = {
             const afterSize = queue?.getSize() ?? 0;
 
             const songsAddedToQueue = afterSize - beforeSize;
+
             // first usage of player
             if (songsAddedToQueue === 0)
-
+            {
                 track.requestedBy = interaction.user;
-
-            else if (songsAddedToQueue > 1)
+            }
             // handles cases of multiple songs (playlist) being loaded at once
-
+            else if (songsAddedToQueue > 1)
+            {
                 for (let i = beforeSize; i < afterSize; i++)
-
                     queue.tracks.toArray()[i].requestedBy = interaction.user;
-
+            }
             else
-
+            {
                 queue.tracks.toArray()[queue.getSize() - 1].requestedBy = interaction.user;
+            }
 
             return interaction.followUp({
                 embeds: [
-                    new EmbedBuilder()
-                        .setDescription(`Added **${track.title}** to the queue!`),
+                    new EmbedBuilder().setDescription(`Added **${track.title}** to the queue!`),
                 ],
             });
         }

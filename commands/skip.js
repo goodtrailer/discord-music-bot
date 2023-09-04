@@ -10,12 +10,14 @@ module.exports = {
     {
         const queue = useQueue(interaction.guild.id);
         if (!queue)
+        {
             return interaction.reply({
                 embeds: [
                     new EmbedBuilder()
                         .setDescription('The queue is empty! Please add some songs to use this command'),
                 ],
             });
+        }
 
         try
         {

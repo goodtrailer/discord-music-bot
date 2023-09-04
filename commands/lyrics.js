@@ -11,12 +11,14 @@ module.exports = {
     {
         const queue = useQueue(interaction.guild.id);
         if (!queue)
+        {
             return interaction.reply({
                 embeds: [
                     new EmbedBuilder()
                         .setDescription('The queue is empty! Please add some songs to use this command'),
                 ],
             });
+        }
 
         try
         {
@@ -27,12 +29,14 @@ module.exports = {
             const lyrics = await lyricsFinder
                 .search(queue.currentTrack.title)
                 .catch(e => console.error(e, e.stack));
-            if (!lyrics)
 
+            if (!lyrics)
+            {
                 return interaction.followUp({
                     content: 'No lyrics found!',
                     ephemeral: false,
                 });
+            }
 
             const trimmedLyrics = lyrics.lyrics.substring(0, 1997);
 
