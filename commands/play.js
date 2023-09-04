@@ -27,7 +27,7 @@ module.exports = {
         await interaction.deferReply();
 
         try {
-            const queue = useQueue(interaction.guild.id);
+            let queue = useQueue(interaction.guild.id);
 
             // checks size of queue before and after adding items to see if a single song was added or multiple
             let beforeSize = queue?.getSize() ?? 0;
@@ -38,6 +38,8 @@ module.exports = {
                 },
             });
 
+            // update queue after track(s) have been added
+            queue = useQueue(interaction.guild.id);
             let afterSize = queue?.getSize() ?? 0;
             const songsAddedToQueue = afterSize - beforeSize;
 
@@ -45,10 +47,8 @@ module.exports = {
             if (!queue || songsAddedToQueue == 0 || songsAddedToQueue == 1) {
                 track.requestedBy = interaction.user;
             } else { // handles cases of multiple songs (playlist) being loaded at once
-                console.log('multiple');
                 for (let i = beforeSize; i < afterSize; i++) {
                     queue.tracks.toArray()[i].requestedBy = interaction.user;
-                    console.log(queue.tracks.toArray()[i].requestedBy.username);
                 }
             }
             return interaction.followUp({
